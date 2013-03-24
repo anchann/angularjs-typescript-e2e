@@ -1,0 +1,250 @@
+<h1>AngularJS in TypeScript with working httpBackend-mocked E2E tests</h1>
+<h2>What this project is</h2>
+<ul>
+<li>A sample of how one can structure a real-world large app written in AngularJS
+using TypeScript as the main language. I aim to have as little code as possible while
+giving proposed solutions to as many typical real-world large app problems as possible.</li>
+<li>An example of a working AngularJS app with end-to-end tests running against a mocked $httpBackend.</li>
+</ul>
+<h2>What this project is <em>not</em></h2>
+<ul>
+<li>a complete working app</li>
+<li>a yeoman generator (but it would be nice to wrap it into one as it matures)</li>
+<li>a guide to AngularJS (for that go read the <a href="http://docs.angularjs.org/guide/">docs</a>)</li>
+<li>a guide to how to write good TypeScript (for that get started with <a href="http://go.microsoft.com/fwlink/?LinkId=267238">spec</a> and <a href="http://blogs.msdn.com/b/typescript/archive/2013/01/24/interfaces-walkthrough.aspx">this post</a>)</li>
+<li>a guide on how to write unit tests (you could start here <a href="http://docs.angularjs.org/guide/dev_guide.unit-testing">this</a>)</li>
+<li>a guide on writing e2e tests (for some of that, work through <a href="http://docs.angularjs.org/tutorial">the tutorial</a>)</li>
+</ul>
+<h2>Why AngularJS?</h2>
+<p>Because it&#39;s superheroic. That aside, the angular guys did a great job on
+a number of fronts. The documentation is fairly decent, the feature set is
+close to complete, the division between controllers, directives, and services
+enforces a nice structure on your project. You can get rather deep without ever
+having to look &quot;under the hood&quot;. Promises of values being treated no different
+than actual values in the data-bound views are nice.</p>
+<p>Most importantly, angular folks made it a priority to make the framework compatible
+with simple vanilla JavaScript. You write functions, and are not forced to extend
+some heavily constraining class hierarchy. This makes it easy to integrate Angular
+with TypeScript.</p>
+<h2>Why TypeScript?</h2>
+<p>Have you ever gotten an error <code>&quot;TypeError: Object #&lt;Object&gt; has no method &#39;blah&#39;&quot;</code> on
+the console in a browser? Chances are you&#39;ve wasted many hours debugging such errors.
+And it could have been in large part avoided.</p>
+<p>JS is dynamically typed and interpreted, which makes you as a developer vulnerable
+to runtime errors that would have been caught at compile time had you been using a
+statically typed compiled language. This becomes a huge pain when developing large
+applications.</p>
+<p>TypeScript is JavaScript with type annotations and some other sugary features. It&#39;s
+compiled to readable JavaScript, and the compiler performs type checking for you,
+meaning you catch many errors before you spend time debugging them in the browser.
+You get benefits similar to those of a solid unit test suite, but at a tiny fraction
+of the cost. And your code gets more readable because you can easily tell what expected
+values for a given variable are.</p>
+<p>The powerful interface definitions syntax allows you to add typing annotations to
+existing JS libraries, making interop between TypeScript and JS trivial yet type-safe
+when desired.</p>
+<h2>What&#39;s with the E2E part?</h2>
+<p>Angular comes with an e2e test runner, and provides you a way to mock a fake http
+backend for your e2e tests. Sadly there are no official examples of how to get this
+stuff working in the context of a real application. The yeoman angular generator, while
+awesome, is also lacking in this department (at least at the time of writing).</p>
+<p>So I want to put out a working example of e2e tests with a mocked backend.</p>
+<h2>Why not ToDoMVC?</h2>
+<p>I feel that ToDoMVC has come to represent a rather meaningless <code>Hello, World!</code> example,
+and tends to be implemented with the goal of writing as little code as possible so as
+to win in an arguably pointless category of comparison--brevity when writing <em>trivial</em>
+apps. I am trying to put together an example that better demonstrates what writing
+a real-world large application would feel like.</p>
+<p>This is also not meant to be a complete working application. I am doing the minimum
+necessary to show off how TypeScript could be used together with AngularJS,
+and to make end-to-end testing work.</p>
+<h2>Okay, how do I get this running on my machine?</h2>
+<ol>
+<li><code>install node</code></li>
+<li><code>clone the repo; all subsequent commands to be run in the repo root</code></li>
+<li><code>npm install -g yo grunt-cli bower</code></li>
+<li><code>npm install --dev</code></li>
+<li><code>bower install --dev</code></li>
+<li><code>sudo npm install -g typescript</code></li>
+<li><code>sudo gem install sass</code></li>
+<li><code>sudo gem install compass</code></li>
+</ol>
+<h2>Now that I got it, how do I see it in action?</h2>
+<p>You&#39;ll need two terminal windows. In one, run the simple backend server</p>
+<p><code>cd backend</code></p>
+<p><code>node app.js</code></p>
+<p>In the other one, run</p>
+<p><code>grunt server</code></p>
+<p>Yes, the page with a header and four tasks is all you&#39;re expecting to see.</p>
+<h2>And you said something about testing?</h2>
+<h3>Briefly about unit and e2e testing in AngularJS</h3>
+<p>Angular sets out to arm you with a powerful set of tools for testing your application.
+In particular, the dependency injection framework allows you to easily mock various
+components and thus test your code in a highly controlled fashion.</p>
+<p>There are three flavours of testing that are of interest to me.</p>
+<h4>Unit tests with mocked injected services</h4>
+<p>Say you&#39;re testing a controller that relies on a service. One way to test this
+controller is to write a fake service, just a JS function, that is used in place
+of the real service during the test. <code>test/spec/controllers/TasksController.js</code>
+illustrates this approach; the mocked <code>TaskService</code> is in <code>test/mocks/services/TaskService.js</code>.</p>
+<h4>Unit tests with mocked $httpBackend</h4>
+<p>Sometimes you may want to unit test a service that gets its data from a remote
+backend. In this case, you could mock out a fake $httpBackend to return hardcoded
+data against which to test. <code>test/spec/services/TaskService.js</code> is an example of
+this approach.</p>
+<h4>E2E tests with a mocked $httpBackend</h4>
+<p>This is in a way the holy grail of testing, in that you get to test the app that
+the user actually interacts with. For predictability reasons it is often desired
+to hardcode some of the responses that would otherwise come from a remote server,
+while letting the other requests straight through. <code>test/e2e/tasks.js</code> is an example
+of this approach. Configuration of what requests get mocked and which are let through
+happens in <code>test/e2e/appTest.js</code>, and the mocked data is supplied in
+<code>test/mocks/data/tasks.js</code>. All this is brought together in <code>app/index-e2e.html</code>.</p>
+<h3>Actually running the tests</h3>
+<p><code>grunt unit</code></p>
+<p>will run unit tests.</p>
+<p><code>grunt unit_watch</code></p>
+<p>will run unit tests, and will then sit, watching for changes in all your
+<code>test/**/*.js</code> files, as well as your <code>.js</code> files in the <code>app/scripts</code> directory.
+Note that this does not directly include changes to <code>.ts</code> files. You have to have
+a separate grunt task running that watches your <code>.ts</code> files and compiles them into
+the <code>tslib.js</code> file, changes to which will then be picked up by the test runner.
+This can be either the <code>grunt server</code> task, or just the <code>grunt watch:typescript</code> task.</p>
+<p>Why don&#39;t you run this task, open <code>test/spec/controllers/TasksController.ts</code> in
+your favourite editor, and change <code>toBe(2)</code> to <code>toBe(3)</code> and watch the test fail.
+Now fix it back to <code>2</code>. Good. In another terminal window, run
+<code>grunt watch:typescript</code>, edit <code>app/scripts/controllers/TasksController.ts</code> and
+comment out the line that sets <code>$scope.tasks</code> in the constructor. Watch the unit
+test fail.</p>
+<p><code>grunt e2e</code></p>
+<p>will run end-to-end tests.</p>
+<p><code>grunt e2e_watch</code></p>
+<p>will do just what you expect it to. The interesting bit about this task is
+that it lets you see what&#39;s happening in the test runner. Switch to the spawned
+Chrome window and click the <code>debug</code> button. You get to see some details about the
+tests.</p>
+<p>You can also run e2e test manually by running good old</p>
+<p><code>grunt server</code></p>
+<p>and then hitting up <a href="http://localhost:9000/test/runner.html">http://localhost:9000/test/runner.html</a> in your browser. This
+could help when debugging something.</p>
+<p>Finally, it is often useful to run the mocked version of the app directly. Perhaps
+you&#39;re doing backend-less development, or just want to debug e2e tests. Run <code>grunt server</code>
+and go to <a href="http://localhost:9000/index-e2e.html">http://localhost:9000/index-e2e.html</a> in your browser.</p>
+<h2>Differences from Yeoman&#39;s angular generator</h2>
+<p>This project is based on the awesome Yeoman scaffolder and the accompanying Grunt
+set of tasks that help with development and building the production dist. There are
+a few differences.</p>
+<h3>Order of compass and image minification</h3>
+<p>In the original <code>Gruntfile</code> that comes from <code>generator-angular</code>, the image minification
+task comes after compass. This is a problem if you like having minified images
+inlined into your css. I reordered the tasks. Details of the plumbing is in the
+comments in <code>Gruntfile.js</code>.</p>
+<p>The supplied code includes a background style that uses an inlined image to demonstrate
+that all this works.</p>
+<h3>Other</h3>
+<ul>
+<li>To get both unit and e2e tests running the way I like them, I tweaked both the karma
+configs and the testing related Grunt tasks.</li>
+</ul>
+<h2>Features worth noting</h2>
+<h3>API typing</h3>
+<p>Note the files in app/scripts/shared/. These are used to give typing information
+to the request and response bodies of the HTTP APIs, which is nice because you
+have typed data coming in, as long as the server complies.</p>
+<p>If you happen to write your backend in node, you can share the directory (via a git repo)
+with the backend, and the two will now have a tighter contract that is type checked.</p>
+<h3>TypeScript&#39;s <code>private</code> keyword in the constructor signature</h3>
+<p>My first impression of this keyword is that while it reduces duplication and clutter
+in code, it also reduces readability by having instance variables listed in two
+different locations in the file. So far I have been sticking with the following
+convention: use <code>private</code> in the constructor signature only on variables representing
+dependency injected services. That way, if you need to look up an instance variable,
+it&#39;s always at the top of the class, and if you need to look up a DI&#39;ed service, it&#39;s
+always in the constructor signature.</p>
+<h3>The &quot;typing chasm&quot;</h3>
+<p>TypeScript does not yet support generics, which creates &quot;typing chasms&quot;, places in
+code where typing information is lost, and it is up to the developer to recover it
+on the other end of the chasm.</p>
+<p>An ng.IPromise is a typical example. We cannot yet say
+<code>ng.IPromise&lt;Task&gt;</code>, so inevitably when we have <code>taskPromise.then((data) =&gt; {})</code>, it is
+up to us to recover the typing information in the callback to <code>then</code>. So you are
+encouraged to write <code>taskPromise.then((task: Task) =&gt; {})</code>, but even if you write
+<code>taskPromise.then((elephant: Elephant) =&gt; {})</code>, the TypeScript compiler will not
+complain.</p>
+<h3>Public members on model objects</h3>
+<p>It tends to be helpful to make public members that would have been private due
+to information hiding in classic OO, for the purposes of data binding. Getter
+functions are the classic way to preserve information hiding yet expose the value
+to the users of the class, but Angular has no way of marking a return value of a
+function as &quot;visited&quot;, and will thus keep evaluating the function on every digest
+cycle, irrespective of whether the data has changed or not, which is prohibitively
+wasteful.</p>
+<h3>Source maps</h3>
+<p>In Chrome dev tools&#39; settings, check &quot;enable source maps&quot;. If you now toss in a <code>debugger</code>
+statement somewhere in your <code>.ts</code> source code, when you hit that breakpoint in the
+browser, you&#39;ll be looking at your TypeScript code, not the generated <code>tslib.js</code>.</p>
+<h2>TODO and wishlist</h2>
+<h3>More AngularJS samples</h3>
+<ul>
+<li>directive</li>
+<li>filter</li>
+</ul>
+<h3>Build</h3>
+<ul>
+<li>document the build process</li>
+<li>add a tiny express server to run the contents of the dist directory</li>
+</ul>
+<h3>Duplication in index.html and index-e2e.html</h3>
+<p>Either you end up writing ugly branching inside index.html to support both dev
+and prod in one file, or you end up branching them, keeping each file clean, but
+having duplication between the files. I chose the latter as the lesser of two evils,
+but am still hoping for a better solution to eventually emerge, one that removes this
+duplication.</p>
+<p>That said, given that most of your js will be delivered as the compiled lib, and
+your css can be delivered as a top level main.css file put together with compass,
+changes to the index.html file that need to be compied over to index-e2e.html will
+hopefully be infrequent.</p>
+<h3>Test related tasks</h3>
+<p>I wish there was a neater way to define the [unit|e2e]-[|watch] set of tasks that
+avoids duplication. I&#39;ll revisit when I have some free cycles, though given that
+the <code>Gruntfile</code> changes far less frequently than the main codebase of the given app,
+I can live with the current definitions.</p>
+<h3>Transforming versus copying</h3>
+<p>In the build process, files originate in the <code>app/</code> directory, get transformed
+(it&#39;s sometimes an identity transform) and end up in the <code>dist/</code> directory. It so
+happens that for most files the transformer task also ends up being the mover task.
+Such coupling makes it impossible for me to easily turn off, say, minification, and
+have the non-minified versions of the files copied automatically into the <code>dist/</code>
+directory. This is likely only a problem for when you&#39;re actually tweaking the build
+process, which few people will hopefully have to do.</p>
+<h2>Origins</h2>
+<p>This setup is the result of tweaking the configs and the tools as part of working
+on two distinct apps. Neither of them are in production as of this writing, and the
+dev process is still evolving, so more changes should be expected.</p>
+<h2>Anticipated questions</h2>
+<ul>
+<li>Why are the tests in JavaScript, and not in TypeScript<ul>
+<li>Yeah, silly, I know. I started out with the tests that came with the yeoman
+scaffold, and haven&#39;t bothered to transition them to TypeScript yet. I suppose
+I wasn&#39;t convinced that there&#39;s much to be gained from the transition, other than
+uniformity of language.</li>
+</ul>
+</li>
+</ul>
+<h2>Conclusion and credits</h2>
+<p>I&#39;ve been frustrated with the state of web development for years. I feel that now
+we are for perhaps the first time ever well-equipped for building large, complex
+yet robust applications that work in the browser. This is possible thanks to the
+fine folks who created:</p>
+<ul>
+<li><a href="http://angularjs.org/">AngularJS</a></li>
+<li><a href="http://www.typescriptlang.org/">TypeScript</a></li>
+<li><a href="http://yeoman.io/">Yeoman</a></li>
+<li><a href="http://gruntjs.com/">Grunt</a></li>
+<li><a href="http://nodejs.org/">Node</a></li>
+<li><a href="https://github.com/borisyankov/DefinitelyTyped">DefinitelyTyped</a></li>
+<li><a href="http://compass-style.org/">Compass</a></li>
+<li><a href="http://twitter.github.com/bower/">Bower</a></li>
+</ul>
+<p>and many others.</p>
+

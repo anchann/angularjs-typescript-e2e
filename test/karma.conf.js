@@ -1,13 +1,20 @@
-// Karma E2E configuration
+/*jshint quotmark:single*/
+// Karma configuration
 
 // base path, that will be used to resolve files and exclude
-basePath = '';
+basePath = '../';
+
 
 // list of files / patterns to load in the browser
 files = [
-  ANGULAR_SCENARIO,
-  ANGULAR_SCENARIO_ADAPTER,
-  'test/e2e/**/*.js'
+	JASMINE,
+	JASMINE_ADAPTER,
+	'app/components/angular/angular.js',
+	'app/components/angular-mocks/angular-mocks.js',
+	'app/components/underscore/underscore.js',
+	'app/scripts/tslib.js',
+	'test/mocks/**/*.js',
+	'test/spec/**/*.js'
 ];
 
 // list of files to exclude
@@ -48,4 +55,4 @@ captureTimeout = 5000;
 
 // Continuous Integration mode
 // if true, it capture browsers, run tests and exit
-singleRun = false;
+singleRun = true;

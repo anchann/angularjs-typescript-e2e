@@ -1,18 +1,16 @@
-// Karma configuration
+/*jshint quotmark:single*/
+// Karma E2E configuration
 
 // base path, that will be used to resolve files and exclude
-basePath = '';
+basePath = '../';
 
 // list of files / patterns to load in the browser
 files = [
-  JASMINE,
-  JASMINE_ADAPTER,
-  'app/components/angular/angular.js',
-  'app/components/angular-mocks/angular-mocks.js',
-  'app/scripts/*.js',
-  'app/scripts/**/*.js',
-  'test/mock/**/*.js',
-  'test/spec/**/*.js'
+	JASMINE,
+	JASMINE_ADAPTER,
+	ANGULAR_SCENARIO,
+	ANGULAR_SCENARIO_ADAPTER,
+	'test/e2e/**/*.js'
 ];
 
 // list of files to exclude
@@ -53,4 +51,11 @@ captureTimeout = 5000;
 
 // Continuous Integration mode
 // if true, it capture browsers, run tests and exit
-singleRun = false;
+singleRun = true;
+
+
+// Needs to match the port on which the grunt connect task launches the server
+proxies = {
+	'/': 'http://localhost:9001/'
+};
+

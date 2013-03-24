@@ -10,5 +10,6 @@ app/scripts/tslib.js.map
 
 # vim swaps
 *.swp
+
 # the pesky OS X stuff
 .DS_Store

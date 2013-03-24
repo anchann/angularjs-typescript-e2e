@@ -12,7 +12,7 @@
 		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 		<link rel="stylesheet" href="styles/main.css">
 	</head>
-	<body ng-app="angtsApp">
+	<body ng-app="angtsAppDev">
 		<!--[if lt IE 7]>
 			<p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
 		<![endif]-->
@@ -26,10 +26,16 @@
 		<div class="container" ng-view></div>
 
 
-		<!-- build:js scripts/scripts.js -->
-		<script src="components/underscore/underscore.js"></script>
-		<script src="components/angular/angular.js"></script>
-		<script src="scripts/tslib.js"></script>
+		<!-- build:js(./) scripts/scripts-e2e.js -->
+		<script src="app/components/underscore/underscore.js"></script>
+		<script src="app/components/angular/angular.js"></script>
+		<script src="app/components/angular-mocks/angular-mocks.js"></script>
+
+		<!-- if the number of mock data files grows a lot, write a grunt task to package them -->
+
+		<script src="test/mocks/data/tasks.js"></script>
+		<script src="app/scripts/tslib.js"></script>
+		<script src="test/e2e/appTest.js"></script>
 		<!-- endbuild -->
 
 		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
