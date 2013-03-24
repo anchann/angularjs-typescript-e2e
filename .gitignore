@@ -1,0 +1,14 @@
+node_modules
+dist
+.tmp
+.sass-cache
+app/components
+
+# compiled TypeScript library and source map
+app/scripts/tslib.js
+app/scripts/tslib.js.map
+
+# vim swaps
+*.swp
+# the pesky OS X stuff
+.DS_Store
