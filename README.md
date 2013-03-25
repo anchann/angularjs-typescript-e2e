@@ -74,14 +74,16 @@ necessary to show off how TypeScript could be used together with AngularJS,
 and to make end-to-end testing work.
 
 ## Okay, how do I get this running on my machine?
-0. `install node`
-1. `clone the repo; all subsequent commands to be run in the repo root`
-2. `npm install -g yo grunt-cli bower`
-3. `npm install --dev`
-4. `bower install --dev`
-5. `sudo npm install -g typescript`
-6. `sudo gem install sass`
-7. `sudo gem install compass`
+0. install [node](http://nodejs.org/)
+1. clone the repo; all subsequent commands to be run in the repo root
+2. `sudo npm install -g yo grunt-cli bower`
+3. `npm install`
+4. `npm install --dev`
+5. `bower install --dev`
+6. `sudo npm install -g typescript`
+7. `sudo gem install sass`
+8. `sudo gem install compass`
+9. `pushd backend && npm install && popd`
 
 
 ## Now that I got it, how do I see it in action?
