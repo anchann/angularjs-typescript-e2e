@@ -11,8 +11,8 @@ giving proposed solutions to as many typical real-world large app problems as po
 <li>a complete working app</li>
 <li>a yeoman generator (but it would be nice to wrap it into one as it matures)</li>
 <li>a guide to AngularJS (for that go read the <a href="http://docs.angularjs.org/guide/">docs</a>)</li>
-<li>a guide to how to write good TypeScript (for that get started with <a href="http://go.microsoft.com/fwlink/?LinkId=267238">spec</a> and <a href="http://blogs.msdn.com/b/typescript/archive/2013/01/24/interfaces-walkthrough.aspx">this post</a>)</li>
-<li>a guide on how to write unit tests (you could start here <a href="http://docs.angularjs.org/guide/dev_guide.unit-testing">this</a>)</li>
+<li>a guide to how to write good TypeScript (for that get started with the <a href="http://go.microsoft.com/fwlink/?LinkId=267238">spec</a> and <a href="http://blogs.msdn.com/b/typescript/archive/2013/01/24/interfaces-walkthrough.aspx">this post</a>)</li>
+<li>a guide on how to write unit tests (you could start <a href="http://docs.angularjs.org/guide/dev_guide.unit-testing">here</a>)</li>
 <li>a guide on writing e2e tests (for some of that, work through <a href="http://docs.angularjs.org/tutorial">the tutorial</a>)</li>
 </ul>
 <h2>Why AngularJS?</h2>
@@ -40,11 +40,11 @@ meaning you catch many errors before you spend time debugging them in the browse
 You get benefits similar to those of a solid unit test suite, but at a tiny fraction
 of the cost. And your code gets more readable because you can easily tell what expected
 values for a given variable are.</p>
-<p>The powerful interface definitions syntax allows you to add typing annotations to
+<p>The powerful interface definition syntax allows you to add type annotations to
 existing JS libraries, making interop between TypeScript and JS trivial yet type-safe
 when desired.</p>
 <h2>What&#39;s with the E2E part?</h2>
-<p>Angular comes with an e2e test runner, and provides you a way to mock a fake http
+<p>Angular comes with an e2e test runner, and provides you with a way to mock a fake http
 backend for your e2e tests. Sadly there are no official examples of how to get this
 stuff working in the context of a real application. The yeoman angular generator, while
 awesome, is also lacking in this department (at least at the time of writing).</p>
@@ -64,14 +64,13 @@ and to make end-to-end testing work.</p>
 <li>clone the repo; all subsequent commands to be run in the repo root</li>
 <li><code>sudo npm install -g yo grunt-cli bower</code></li>
 <li><code>npm install</code></li>
-<li><code>npm install --dev</code></li>
 <li><code>bower install --dev</code></li>
 <li><code>sudo npm install -g typescript</code></li>
 <li><code>sudo gem install sass</code></li>
 <li><code>sudo gem install compass</code></li>
 <li><code>pushd backend &amp;&amp; npm install &amp;&amp; popd</code></li>
 </ol>
-<h2>Now that I got it, how do I see it in action?</h2>
+<h2>Now that I have it, how do I see it in action?</h2>
 <p>You&#39;ll need two terminal windows. In one, run the simple backend server</p>
 <p><code>cd backend</code></p>
 <p><code>node app.js</code></p>
@@ -79,12 +78,12 @@ and to make end-to-end testing work.</p>
 <p><code>grunt server</code></p>
 <p>Yes, the page with a header and four tasks is all you&#39;re expecting to see.</p>
 <h2>And you said something about testing?</h2>
-<h3>Briefly about unit and e2e testing in AngularJS</h3>
+<h3>Brief note about unit and e2e testing in AngularJS</h3>
 <p>Angular sets out to arm you with a powerful set of tools for testing your application.
 In particular, the dependency injection framework allows you to easily mock various
 components and thus test your code in a highly controlled fashion.</p>
 <p>There are three flavours of testing that are of interest to me.</p>
-<h4>Unit tests with mocked injected services</h4>
+<h4>Unit tests with mocked, injected services</h4>
 <p>Say you&#39;re testing a controller that relies on a service. One way to test this
 controller is to write a fake service, just a JS function, that is used in place
 of the real service during the test. <code>test/spec/controllers/TasksController.js</code>
@@ -95,7 +94,7 @@ backend. In this case, you could mock out a fake $httpBackend to return hardcode
 data against which to test. <code>test/spec/services/TaskService.js</code> is an example of
 this approach.</p>
 <h4>E2E tests with a mocked $httpBackend</h4>
-<p>This is in a way the holy grail of testing, in that you get to test the app that
+<p>This is, in a way, the holy grail of testing, in that you get to test the app that
 the user actually interacts with. For predictability reasons it is often desired
 to hardcode some of the responses that would otherwise come from a remote server,
 while letting the other requests straight through. <code>test/e2e/tasks.js</code> is an example
@@ -142,7 +141,7 @@ task comes after compass. This is a problem if you like having minified images
 inlined into your css. I reordered the tasks. Details of the plumbing is in the
 comments in <code>Gruntfile.js</code>.</p>
 <p>The supplied code includes a background style that uses an inlined image to demonstrate
-that all this works.</p>
+that all of this works.</p>
 <h3>Other</h3>
 <ul>
 <li>To get both unit and e2e tests running the way I like them, I tweaked both the karma
@@ -235,7 +234,7 @@ uniformity of language.</li>
 </ul>
 <h2>Conclusion and credits</h2>
 <p>I&#39;ve been frustrated with the state of web development for years. I feel that now
-we are for perhaps the first time ever well-equipped for building large, complex
+we are, for perhaps the first time ever, well-equipped for building large, complex
 yet robust applications that work in the browser. This is possible thanks to the
 fine folks who created:</p>
 <ul>

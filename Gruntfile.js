@@ -160,7 +160,8 @@ module.exports = function (grunt) {
 				// this task outputs everything to .tmp; for the production build,
 				// the cssmin task will pick up .css files from .tmp and move them to dist
 				cssDir:         '<%= yeoman.tmp %>/styles',
-				imagesDir:      '<%= yeoman.tmp %>/images',
+				// FIXME imagemin seems broken, so for now take images from the app directory
+				imagesDir:      '<%= yeoman.app %>/images',
 				javascriptsDir: '<%= yeoman.app %>/scripts',
 				fontsDir:       '<%= yeoman.app %>/styles/fonts',
 				importPath:     '<%= yeoman.app %>/components',
@@ -310,13 +311,15 @@ module.exports = function (grunt) {
 	// compass, so that optimized images are inlined into the resulting
 	// .css files. We also want to copy .gif files over straight.
 	grunt.registerTask('imgcompass_server', [
-		'imagemin:tmp',
+		// FIXME imagemin appears broken, disabling for now
+		//'imagemin:tmp',
 		'copy:gifs_tmp',
 		'compass:server'
 	]);
 
 	grunt.registerTask('imgcompass_dist', [
-		'imagemin:dist',
+		// FIXME imagemin appears broken, disabling for now
+		//'imagemin:dist',
 		'copy:gifs_dist',
 		'compass:dist'
 	]);

@@ -77,12 +77,12 @@ and to make end-to-end testing work.
 1. install [node](http://nodejs.org/)
 1. clone the repo; all subsequent commands to be run in the repo root
 1. `sudo npm install -g yo grunt-cli bower`
-1. `sudo npm install`
+1. `npm install`
 1. `bower install --dev`
 1. `sudo npm install -g typescript`
 1. `sudo gem install sass`
 1. `sudo gem install compass`
-1. `pushd backend && sudo npm install && popd`
+1. `pushd backend && npm install && popd`
 
 
 ## Now that I have it, how do I see it in action?
