@@ -22,9 +22,19 @@
 			<script src="components/json3/lib/json3.min.js"></script>
 		<![endif]-->
 
-		<!-- Add your site or application content here -->
 		<div class="container" ng-view></div>
 
+		<!-- script tags in dev, edge-side-includes in prod -->
+		<esi:remove>
+			<script src="config.js"></script>
+			<script src="config_overrides.js"></script>
+		</esi:remove>
+		<!--esi
+		<script>
+			<esi:include src="config.js"/>
+			<esi:include src="config_overrides.js"/>
+		</script>
+		-->
 
 		<!-- build:js(./) scripts/scripts-e2e.js -->
 		<script src="app/components/underscore/underscore.js"></script>

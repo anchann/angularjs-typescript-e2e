@@ -8,6 +8,9 @@ app/components
 app/scripts/tslib.js
 app/scripts/tslib.js.map
 
+# config overrides
+app/config_overrides.js
+
 # vim swaps
 *.swp
 

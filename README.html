@@ -5,6 +5,7 @@
 using TypeScript as the main language. I aim to have as little code as possible while
 giving proposed solutions to as many typical real-world large app problems as possible.</li>
 <li>An example of a working AngularJS app with end-to-end tests running against a mocked $httpBackend.</li>
+<li>An example of how to manage default versus prod/dev/individual configs for your app</li>
 </ul>
 <h2>What this project is <em>not</em></h2>
 <ul>
@@ -69,6 +70,7 @@ and to make end-to-end testing work.</p>
 <li><code>sudo gem install sass</code></li>
 <li><code>sudo gem install compass</code></li>
 <li><code>pushd backend &amp;&amp; npm install &amp;&amp; popd</code></li>
+<li><code>touch app/config_overrides.js</code></li>
 </ol>
 <h2>Now that I have it, how do I see it in action?</h2>
 <p>You&#39;ll need two terminal windows. In one, run the simple backend server</p>
@@ -184,6 +186,26 @@ wasteful.</p>
 <p>In Chrome dev tools&#39; settings, check &quot;enable source maps&quot;. If you now toss in a <code>debugger</code>
 statement somewhere in your <code>.ts</code> source code, when you hit that breakpoint in the
 browser, you&#39;ll be looking at your TypeScript code, not the generated <code>tslib.js</code>.</p>
+<h3>Config system</h3>
+<p>It&#39;s typical to need to pass a set of config variables to the app, e.g. the backend
+server URL that the app is supposed to hit. I propose the following solution.</p>
+<p>Two config files are included in <code>index.html</code></p>
+<ul>
+<li><code>app/config.js</code>, which defines a JS variable and assigns an object literal to it,
+containing the default config values. This file is kept in the code base. The authors
+are encouraged to set defaults that will let the app work out of the box.</li>
+<li><code>app/config_overrides.js</code>, which possibly changes the values of a subset of the fields
+defined on the variable in <code>config.js</code>. This file is <em>not</em> kept in the code base. Each
+developer will have their own overrides, and a production version will be deployed as
+part of the deployment (and managed separately, by puppet or whatever other software is
+used for deploying). <code>config_overrides.sample.js</code> is provided for reference.</li>
+</ul>
+<p>This JS variable is then added to the dependency injector as a constant, and can be injected
+into whichever service/controller/directive/etc needs access to the config values.
+See <code>TaskService.ts</code> for an example of how it&#39;s used.</p>
+<p>In dev, these two files are loaded as <code>&lt;script&gt;</code> nodes, while in an environment where
+the static <code>index.html</code> file is served by varnish or something similar, edge-side-includes
+are used to inline the contents of the config.</p>
 <h2>TODO and wishlist</h2>
 <h3>More AngularJS samples</h3>
 <ul>

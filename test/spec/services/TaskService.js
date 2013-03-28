@@ -2,7 +2,8 @@
 
 describe("Service: TaskService", function() {
 	var $httpBackend,
-	    taskService;
+	    taskService,
+	    config;
 
 	beforeEach(function() {
 		module("angtsApp");
@@ -10,13 +11,14 @@ describe("Service: TaskService", function() {
 		inject(function($injector) {
 			$httpBackend = $injector.get("$httpBackend");
 			taskService  = $injector.get("taskService");
+			config       = $injector.get("config");
 		});
 	});
 
 	it("has the correct number of tasks, with correct titles", function() {
 		var tasks = undefined;
 
-		$httpBackend.expectGET(TaskService.SERVER + "/tasks.json")
+		$httpBackend.expectGET(config.BACKEND_SERVER + "/tasks.json")
 		.respond([
 			{title: "First task"},
 			{title: "Second task"},

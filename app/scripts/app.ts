@@ -1,5 +1,6 @@
 ///<reference path='../components/DefinitelyTyped/angularjs/angular.d.ts'/>
 ///<reference path='controllers/RootScope.ts'/>
+///<reference path='services/Config.d.ts'/>
 
 declare var _;
 
@@ -16,3 +17,6 @@ var angtsApp: AngtsApp = angular.module("angtsApp", [])
 		redirectTo: "/tasks"
 	});
 });
+
+declare var angtsConfig: Config;
+angtsApp.constant("config", angtsConfig);

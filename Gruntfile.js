@@ -57,7 +57,7 @@ module.exports = function (grunt) {
 				files: [
 					'<%= yeoman.app %>/**/*.html',
 					'{.tmp,<%= yeoman.app %>}/styles/*.css',
-					'{.tmp,<%= yeoman.app %>}/scripts/**/*.js',
+					'{.tmp,<%= yeoman.app %>}/**/*.js',
 					'<%= yeoman.app %>/images/*.{png,jpg,jpeg,gif,webp}'
 				],
 				tasks: ['livereload']
@@ -223,27 +223,6 @@ module.exports = function (grunt) {
 			// this empty config will be appended by the usemin task, based on the
 			// <!-- build:css --> blocks in index.html
 		},
-		htmlmin: {
-			dist: {
-				options: {
-					/*removeCommentsFromCDATA: true,
-					// https://github.com/yeoman/grunt-usemin/issues/44
-					//collapseWhitespace: true,
-					collapseBooleanAttributes: true,
-					removeAttributeQuotes: true,
-					removeRedundantAttributes: true,
-					useShortDoctype: true,
-					removeEmptyAttributes: true,
-					removeOptionalTags: true*/
-				},
-				files: [{
-					expand: true,
-					cwd: '<%= yeoman.app %>',
-					src: ['*.html', 'views/**/*.html'],
-					dest: '<%= yeoman.dist %>'
-				}]
-			}
-		},
 		cdnify: {
 			dist: {
 				html: ['<%= yeoman.dist %>/*.html']
@@ -295,7 +274,11 @@ module.exports = function (grunt) {
 						'*.{ico,txt}',
 						'.htaccess',
 						'components/**/*',
-						'images/{,*/}*.{gif,webp}'
+						'images/{,*/}*.{gif,webp}',
+						'views/**/*.html',
+						'*.html',
+						// default config
+						'config.js',
 					]
 				}]
 			}
@@ -391,7 +374,6 @@ module.exports = function (grunt) {
 		'imgcompass_dist',
 
 		'useminPrepare',
-			'htmlmin',
 			'concat',
 			'cssmin',
 			'copy:dist',

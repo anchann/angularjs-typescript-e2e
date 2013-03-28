@@ -6,6 +6,7 @@
 using TypeScript as the main language. I aim to have as little code as possible while
 giving proposed solutions to as many typical real-world large app problems as possible.
 * An example of a working AngularJS app with end-to-end tests running against a mocked $httpBackend.
+* An example of how to manage default versus prod/dev/individual configs for your app
 
 ## What this project is _not_
 
@@ -83,6 +84,7 @@ and to make end-to-end testing work.
 1. `sudo gem install sass`
 1. `sudo gem install compass`
 1. `pushd backend && npm install && popd`
+1. `touch app/config_overrides.js`
 
 
 ## Now that I have it, how do I see it in action?
@@ -247,6 +249,30 @@ wasteful.
 In Chrome dev tools' settings, check "enable source maps". If you now toss in a `debugger`
 statement somewhere in your `.ts` source code, when you hit that breakpoint in the
 browser, you'll be looking at your TypeScript code, not the generated `tslib.js`.
+
+### Config system
+
+It's typical to need to pass a set of config variables to the app, e.g. the backend
+server URL that the app is supposed to hit. I propose the following solution.
+
+Two config files are included in `index.html`
+
+* `app/config.js`, which defines a JS variable and assigns an object literal to it,
+containing the default config values. This file is kept in the code base. The authors
+are encouraged to set defaults that will let the app work out of the box.
+* `app/config_overrides.js`, which possibly changes the values of a subset of the fields
+defined on the variable in `config.js`. This file is _not_ kept in the code base. Each
+developer will have their own overrides, and a production version will be deployed as
+part of the deployment (and managed separately, by puppet or whatever other software is
+used for deploying). `config_overrides.sample.js` is provided for reference.
+
+This JS variable is then added to the dependency injector as a constant, and can be injected
+into whichever service/controller/directive/etc needs access to the config values.
+See `TaskService.ts` for an example of how it's used.
+
+In dev, these two files are loaded as `<script>` nodes, while in an environment where
+the static `index.html` file is served by varnish or something similar, edge-side-includes
+are used to inline the contents of the config.
 
 ## TODO and wishlist
 

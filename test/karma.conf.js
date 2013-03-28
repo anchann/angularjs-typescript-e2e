@@ -12,6 +12,8 @@ files = [
 	'app/components/angular/angular.js',
 	'app/components/angular-mocks/angular-mocks.js',
 	'app/components/underscore/underscore.js',
+	'app/config.js',
+	'app/config_overrides.js',
 	'app/scripts/tslib.js',
 	'test/mocks/**/*.js',
 	'test/spec/**/*.js'
