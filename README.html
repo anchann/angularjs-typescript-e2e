@@ -69,12 +69,12 @@ and to make end-to-end testing work.</p>
 <li><code>sudo npm install -g typescript</code></li>
 <li><code>sudo gem install sass</code></li>
 <li><code>sudo gem install compass</code></li>
-<li><code>pushd backend &amp;&amp; npm install &amp;&amp; popd</code></li>
+<li><code>pushd fake_backend &amp;&amp; npm install &amp;&amp; popd</code></li>
 <li><code>touch app/config_overrides.js</code></li>
 </ol>
 <h2>Now that I have it, how do I see it in action?</h2>
 <p>You&#39;ll need two terminal windows. In one, run the simple backend server</p>
-<p><code>cd backend</code></p>
+<p><code>cd fake_backend</code></p>
 <p><code>node app.js</code></p>
 <p>In the other one, run</p>
 <p><code>grunt server</code></p>
@@ -213,10 +213,12 @@ are used to inline the contents of the config.</p>
 <li>filter</li>
 </ul>
 <h3>Build</h3>
-<ul>
-<li>document the build process</li>
-<li>add a tiny express server to run the contents of the dist directory</li>
-</ul>
+<p>The build process is still a work in progress. I&#39;ve been modifying the default generator-angular&#39;s
+build task to fit the needs of this project.</p>
+<p>The fake_production directory now has a simple express server running on port 4000, pointing
+at the dist directory that is the artifact of the build process. Revisioning works, at least for
+the set of tests that I did (CSS bundle is correctly versioned and pulled in, as is the scripts bundle,
+and images refered by <code>url(...)</code> in CSS and through <code>&lt;img src...&gt;</code> in HTML. Nested directories work.</p>
 <h3>Duplication in index.html and index-e2e.html</h3>
 <p>Either you end up writing ugly branching inside index.html to support both dev
 and prod in one file, or you end up branching them, keeping each file clean, but

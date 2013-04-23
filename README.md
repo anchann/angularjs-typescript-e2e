@@ -83,7 +83,7 @@ and to make end-to-end testing work.
 1. `sudo npm install -g typescript`
 1. `sudo gem install sass`
 1. `sudo gem install compass`
-1. `pushd backend && npm install && popd`
+1. `pushd fake_backend && npm install && popd`
 1. `touch app/config_overrides.js`
 
 
@@ -91,7 +91,7 @@ and to make end-to-end testing work.
 
 You'll need two terminal windows. In one, run the simple backend server
 
-`cd backend`
+`cd fake_backend`
 
 `node app.js`
 
@@ -281,8 +281,14 @@ are used to inline the contents of the config.
 * filter
 
 ### Build
-* document the build process
-* add a tiny express server to run the contents of the dist directory
+
+The build process is still a work in progress. I've been modifying the default generator-angular's
+build task to fit the needs of this project.
+
+The fake_production directory now has a simple express server running on port 4000, pointing
+at the dist directory that is the artifact of the build process. Revisioning works, at least for
+the set of tests that I did (CSS bundle is correctly versioned and pulled in, as is the scripts bundle,
+and images refered by `url(...)` in CSS and through `<img src...>` in HTML. Nested directories work.
 
 ### Duplication in index.html and index-e2e.html
 

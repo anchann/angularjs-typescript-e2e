@@ -16,3 +16,6 @@ app/config_overrides.js
 
 # the pesky OS X stuff
 .DS_Store
+
+# sublime project files
+*.sublime*

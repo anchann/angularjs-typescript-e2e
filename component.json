@@ -4,7 +4,7 @@
 	"dependencies": {
 		"angular": "~1.0.5",
 		"json3": "~3.2.4",
-		"es5-shim": "~2.0.5",
+		"es5-shim": "~2.0.8",
 		"DefinitelyTyped": "https://github.com/borisyankov/DefinitelyTyped.git",
 		"underscore": "*"
 	},

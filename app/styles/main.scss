@@ -3,4 +3,24 @@
 body {
 	background-image: inline-image("texture.png");
 	color: $dark;
+
+	h1 {
+		padding-left: 30px;
+		background: {
+			image: url("/images/bullet.png");
+			repeat: no-repeat;
+			position: top left;
+		}
+	}
+
+	ul {
+		li {
+			list-style-image: url("/images/nested/many/levels/deep/bullet.png");
+		}
+	}
+
+	.img-tests {
+		margin-top: 50px;
+		text-align: center;
+	}
 }

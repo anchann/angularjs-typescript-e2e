@@ -36,10 +36,14 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		yeoman: yeomanConfig,
+		// NOTE grunt-regarde, that powers watch, only executes the last task that
+		// matches a given file. Be careful of this when tweaking these tasks.
+		// https://github.com/yeoman/grunt-regarde/issues/7
 		watch: {
 			typescript: {
 				files: ['<%= yeoman.app %>/scripts/**/*.ts'],
-				tasks: ['typescript']
+				tasks: ['typescript'],
+				spawn: true // otherwise compile errors kill the watch
 			},
 			compass: {
 				files: ['<%= yeoman.app %>/styles/**/*.{scss,sass}'],
@@ -146,7 +150,7 @@ module.exports = function (grunt) {
 			base: {
 				src: [
 					'<%= yeoman.app %>/scripts/app.ts',
-					'<%= yeoman.app %>/scripts/**/*.ts'
+					'<%= yeoman.app %>/scripts/**/*.ts',
 				],
 				dest: '<%= yeoman.app %>/scripts/tslib.js',
 				options: {
@@ -160,8 +164,7 @@ module.exports = function (grunt) {
 				// this task outputs everything to .tmp; for the production build,
 				// the cssmin task will pick up .css files from .tmp and move them to dist
 				cssDir:         '<%= yeoman.tmp %>/styles',
-				// FIXME imagemin seems broken, so for now take images from the app directory
-				imagesDir:      '<%= yeoman.app %>/images',
+				imagesDir:      '<%= yeoman.tmp %>/images',
 				javascriptsDir: '<%= yeoman.app %>/scripts',
 				fontsDir:       '<%= yeoman.app %>/styles/fonts',
 				importPath:     '<%= yeoman.app %>/components',
@@ -206,7 +209,7 @@ module.exports = function (grunt) {
 				files: [{
 					expand: true,
 					cwd:    '<%= yeoman.app %>/images',
-					src:    '{,*/}*.{png,jpg,jpeg}',
+					src:    '**/*.{png,jpg,jpeg}',
 					dest:   '<%= yeoman.tmp %>/images'
 				}]
 			},
@@ -214,7 +217,7 @@ module.exports = function (grunt) {
 				files: [{
 					expand: true,
 					cwd: '<%= yeoman.app %>/images',
-					src: '{,*/}*.{png,jpg,jpeg}',
+					src:    '**/*.{png,jpg,jpeg}',
 					dest: '<%= yeoman.dist %>/images'
 				}]
 			}
@@ -243,7 +246,19 @@ module.exports = function (grunt) {
 				files: {
 					'<%= yeoman.dist %>/scripts/scripts.js': [
 						'<%= yeoman.dist %>/scripts/scripts.js'
-					],
+					]
+				}
+			}
+		},
+		rev: {
+			dist: {
+				files: {
+					src: [
+						'<%= yeoman.dist %>/scripts/**/*.js',
+						'<%= yeoman.dist %>/styles/**/*.css',
+						'<%= yeoman.dist %>/images/**/*.{png,jpg,jpeg,gif,webp,svg}',
+						'<%= yeoman.dist %>/styles/fonts/**/*'
+					]
 				}
 			}
 		},
@@ -273,8 +288,9 @@ module.exports = function (grunt) {
 					src: [
 						'*.{ico,txt}',
 						'.htaccess',
+						// change this to copy only the components necessary for the production dist
 						'components/**/*',
-						'images/{,*/}*.{gif,webp}',
+						'images/**/*.{gif,webp}',
 						'views/**/*.html',
 						'*.html',
 						// default config
@@ -294,15 +310,13 @@ module.exports = function (grunt) {
 	// compass, so that optimized images are inlined into the resulting
 	// .css files. We also want to copy .gif files over straight.
 	grunt.registerTask('imgcompass_server', [
-		// FIXME imagemin appears broken, disabling for now
-		//'imagemin:tmp',
+		'imagemin:tmp',
 		'copy:gifs_tmp',
 		'compass:server'
 	]);
 
 	grunt.registerTask('imgcompass_dist', [
-		// FIXME imagemin appears broken, disabling for now
-		//'imagemin:dist',
+		'imagemin:dist',
 		'copy:gifs_dist',
 		'compass:dist'
 	]);
@@ -369,7 +383,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('build', [
 		'clean:dist',
 		'typescript',
-		'jshint:all',
+		//'jshint:all',
 		'test',
 		'imgcompass_dist',
 
@@ -380,9 +394,10 @@ module.exports = function (grunt) {
 			// from what I understand, cdnify only moves google cdn linked scripts
 			// out of the usemin's build comment blocks; we don't need to worry about that
 			// 'cdnify',
-		'usemin',
 		'ngmin',
+		'rev',
 		//'uglify'
+		'usemin',
 	]);
 
 	grunt.registerTask('default', ['typescript']);
