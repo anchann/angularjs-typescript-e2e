@@ -198,7 +198,12 @@ module.exports = function (grunt) {
 			}
 		},
 		usemin: {
-			html: ['<%= yeoman.dist %>/{,*/}*.html'],
+			html: [
+				'<%= yeoman.dist %>/index.html',
+				'<%= yeoman.dist %>/index-e2e.html',
+				'<%= yeoman.dist %>/views/**/*.html',
+				'<%= yeoman.dist %>/pages/**/*.html',
+			],
 			css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
 			options: {
 				dirs: ['<%= yeoman.dist %>']
