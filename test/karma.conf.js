@@ -14,6 +14,7 @@ files = [
 	'app/components/underscore/underscore.js',
 	'app/config.js',
 	'app/config_overrides.js',
+	'app/scripts/templates.js',
 	'app/scripts/tslib.js',
 	'test/mocks/**/*.js',
 	'test/spec/**/*.js'
@@ -53,7 +54,7 @@ autoWatch = false;
 browsers = ['Chrome'];
 
 // If browser does not capture in given timeout [ms], kill it
-captureTimeout = 5000;
+captureTimeout = 15000;
 
 // Continuous Integration mode
 // if true, it capture browsers, run tests and exit

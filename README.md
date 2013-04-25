@@ -7,6 +7,8 @@ using TypeScript as the main language. I aim to have as little code as possible 
 giving proposed solutions to as many typical real-world large app problems as possible.
 * An example of a working AngularJS app with end-to-end tests running against a mocked $httpBackend.
 * An example of how to manage default versus prod/dev/individual configs for your app
+* An example of how get resourse revving _really_ working. See details below.
+* An example of how to get html partials preloaded _with_ revving.
 
 ## What this project is _not_
 
@@ -274,12 +276,6 @@ In dev, these two files are loaded as `<script>` nodes, while in an environment 
 the static `index.html` file is served by varnish or something similar, edge-side-includes
 are used to inline the contents of the config.
 
-## TODO and wishlist
-
-### More AngularJS samples
-* directive
-* filter
-
 ### Build
 
 The build process is still a work in progress. I've been modifying the default generator-angular's
@@ -289,6 +285,29 @@ The fake_production directory now has a simple express server running on port 40
 at the dist directory that is the artifact of the build process. Revisioning works, at least for
 the set of tests that I did (CSS bundle is correctly versioned and pulled in, as is the scripts bundle,
 and images refered by `url(...)` in CSS and through `<img src...>` in HTML. Nested directories work.
+
+### Resource revving and html partials cache priming
+
+When serving this stuff in production, it is desired that every resource other than index.html has
+far future expires headers set, and invalidation happens by virtue of the URLs changing. Revving
+with grunt-rev accomplishes that, but there are details that take work to get right.
+
+We also don't want to the user agent to fire a hundred request for partials, and want to instead deliver
+them as a single bundle. The grunt-html2js task helps us with building the bundle, but there is a bunch
+of chicken and egg problems that happen. For example, we need to make sure the bundled partials have already
+had their asset references updated to revved versions. We also need to rev the partials bundle itself. We
+also need to make sure that the final copy of index.html refers to the revved templates bundle. Finally,
+dev should still work without any of this getting in the way.
+
+See comments and build task layout inside the Gruntfile to see how all this works.
+
+
+## TODO and wishlist
+
+### More AngularJS samples
+* directive
+* filter
+
 
 ### Duplication in index.html and index-e2e.html
 

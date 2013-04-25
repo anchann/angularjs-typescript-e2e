@@ -6,6 +6,8 @@ using TypeScript as the main language. I aim to have as little code as possible 
 giving proposed solutions to as many typical real-world large app problems as possible.</li>
 <li>An example of a working AngularJS app with end-to-end tests running against a mocked $httpBackend.</li>
 <li>An example of how to manage default versus prod/dev/individual configs for your app</li>
+<li>An example of how get resourse revving <em>really</em> working. See details below.</li>
+<li>An example of how to get html partials preloaded <em>with</em> revving.</li>
 </ul>
 <h2>What this project is <em>not</em></h2>
 <ul>
@@ -206,12 +208,6 @@ See <code>TaskService.ts</code> for an example of how it&#39;s used.</p>
 <p>In dev, these two files are loaded as <code>&lt;script&gt;</code> nodes, while in an environment where
 the static <code>index.html</code> file is served by varnish or something similar, edge-side-includes
 are used to inline the contents of the config.</p>
-<h2>TODO and wishlist</h2>
-<h3>More AngularJS samples</h3>
-<ul>
-<li>directive</li>
-<li>filter</li>
-</ul>
 <h3>Build</h3>
 <p>The build process is still a work in progress. I&#39;ve been modifying the default generator-angular&#39;s
 build task to fit the needs of this project.</p>
@@ -219,6 +215,23 @@ build task to fit the needs of this project.</p>
 at the dist directory that is the artifact of the build process. Revisioning works, at least for
 the set of tests that I did (CSS bundle is correctly versioned and pulled in, as is the scripts bundle,
 and images refered by <code>url(...)</code> in CSS and through <code>&lt;img src...&gt;</code> in HTML. Nested directories work.</p>
+<h3>Resource revving and html partials cache priming</h3>
+<p>When serving this stuff in production, it is desired that every resource other than index.html has
+far future expires headers set, and invalidation happens by virtue of the URLs changing. Revving
+with grunt-rev accomplishes that, but there are details that take work to get right.</p>
+<p>We also don&#39;t want to the user agent to fire a hundred request for partials, and want to instead deliver
+them as a single bundle. The grunt-html2js task helps us with building the bundle, but there is a bunch
+of chicken and egg problems that happen. For example, we need to make sure the bundled partials have already
+had their asset references updated to revved versions. We also need to rev the partials bundle itself. We
+also need to make sure that the final copy of index.html refers to the revved templates bundle. Finally,
+dev should still work without any of this getting in the way.</p>
+<p>See comments and build task layout inside the Gruntfile to see how all this works.</p>
+<h2>TODO and wishlist</h2>
+<h3>More AngularJS samples</h3>
+<ul>
+<li>directive</li>
+<li>filter</li>
+</ul>
 <h3>Duplication in index.html and index-e2e.html</h3>
 <p>Either you end up writing ugly branching inside index.html to support both dev
 and prod in one file, or you end up branching them, keeping each file clean, but

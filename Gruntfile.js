@@ -198,6 +198,7 @@ module.exports = function (grunt) {
 			}
 		},
 		usemin: {
+			// first pass tasks 'html' and 'css'
 			html: [
 				'<%= yeoman.dist %>/index.html',
 				'<%= yeoman.dist %>/index-e2e.html',
@@ -205,6 +206,16 @@ module.exports = function (grunt) {
 				'<%= yeoman.dist %>/pages/**/*.html',
 			],
 			css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+			// second pass of usemin to update the reference to the templates.js file
+			// that was generated _after_ the first pass of usemin, since it needs to
+			// bundle together .html files _after_ asset references in them have been
+			// updated with revved filenames
+			templates: {
+				src: ['<%= yeoman.dist %>/index.html'],
+				options: {
+					type:  'html',
+				},
+			},
 			options: {
 				dirs: ['<%= yeoman.dist %>']
 			}
@@ -256,13 +267,20 @@ module.exports = function (grunt) {
 			}
 		},
 		rev: {
-			dist: {
+			first: {
 				files: {
 					src: [
 						'<%= yeoman.dist %>/scripts/**/*.js',
 						'<%= yeoman.dist %>/styles/**/*.css',
 						'<%= yeoman.dist %>/images/**/*.{png,jpg,jpeg,gif,webp,svg}',
 						'<%= yeoman.dist %>/styles/fonts/**/*'
+					]
+				}
+			},
+			second: {
+				files: {
+					src: [
+						'<%= yeoman.dist %>/scripts/templates.js',
 					]
 				}
 			}
@@ -303,7 +321,17 @@ module.exports = function (grunt) {
 					]
 				}]
 			}
-		}
+		},
+		html2js: {
+			options: {
+				base: '<%= yeoman.dist %>',
+				module: 'angtsTemplates',
+			},
+			main: {
+				src:  ['<%= yeoman.dist %>/views/**/*.html'],
+				dest: '<%= yeoman.dist %>/scripts/templates.js',
+			}
+		},
 	});
 
 	grunt.renameTask('regarde', 'watch');
@@ -400,9 +428,14 @@ module.exports = function (grunt) {
 			// out of the usemin's build comment blocks; we don't need to worry about that
 			// 'cdnify',
 		'ngmin',
-		'rev',
+		'rev:first',
 		//'uglify'
-		'usemin',
+		'usemin:html',
+		'usemin:css',
+
+		'html2js',
+		'rev:second',
+		'usemin:templates',
 	]);
 
 	grunt.registerTask('default', ['typescript']);

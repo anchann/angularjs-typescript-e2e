@@ -45,6 +45,10 @@
 		<script src="scripts/tslib.js"></script>
 		<!-- endbuild -->
 
+		<!-- This file is intentionally outside of the build bundle, because the html2js task
+		     runs after all the usemin stuff has finished, so at the time the bundle is constructed,
+		     the contents of templates.js is still empty the dev stub version. -->
+		<script src="scripts/templates.js"></script>
 		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 		<!-- commenting out until you set up our analytics ID here
 		<script>

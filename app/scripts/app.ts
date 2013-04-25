@@ -1,12 +1,11 @@
 ///<reference path='../components/DefinitelyTyped/angularjs/angular.d.ts'/>
-///<reference path='controllers/RootScope.ts'/>
 ///<reference path='services/Config.d.ts'/>
 
 declare var _;
 
 interface AngtsApp extends ng.IModule {}
 
-var angtsApp: AngtsApp = angular.module("angtsApp", [])
+var angtsApp: AngtsApp = angular.module("angtsApp", ["angtsTemplates"])
 .config(($routeProvider: ng.IRouteProvider) => {
 	$routeProvider
 	.when("/tasks", {
