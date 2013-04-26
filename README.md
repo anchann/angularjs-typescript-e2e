@@ -201,6 +201,10 @@ that all of this works.
 
 * To get both unit and e2e tests running the way I like them, I tweaked both the karma
 configs and the testing related Grunt tasks.
+* config system included
+* caching of partials
+* build success verification
+* revving working will all our use cases
 
 ## Features worth noting
 
