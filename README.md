@@ -301,6 +301,9 @@ dev should still work without any of this getting in the way.
 
 See comments and build task layout inside the Gruntfile to see how all this works.
 
+Since the build process has gotten rather involved with the revving and partials caching, we built a
+grunt task the verify success of the build. Its job is to basically check that whatever needs to be
+revved is, and that whatever needs to reference revved versions of files, does.
 
 ## TODO and wishlist
 

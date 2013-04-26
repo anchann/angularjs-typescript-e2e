@@ -332,6 +332,31 @@ module.exports = function (grunt) {
 				dest: '<%= yeoman.dist %>/scripts/templates.js',
 			}
 		},
+		verifybuild: {
+			options: {
+				exist: [
+					'index.html',
+				],
+				revved: [
+					'scripts/scripts.js',
+					'scripts/templates.js',
+					'styles/styles.css',
+				],
+				revvedRefs: {
+					'index.html': [
+						'scripts/scripts.js',
+						'scripts/templates.js',
+						'styles/styles.css',
+					],
+					'scripts/templates.js': [
+						'images/nested/many/levels/deep/bullet.png',
+					],
+					'styles/styles.css': [
+						'images/nested/many/levels/deep/bullet.png',
+					],
+				},
+			}
+		}
 	});
 
 	grunt.renameTask('regarde', 'watch');
@@ -421,12 +446,12 @@ module.exports = function (grunt) {
 		'imgcompass_dist',
 
 		'useminPrepare',
-			'concat',
-			'cssmin',
-			'copy:dist',
-			// from what I understand, cdnify only moves google cdn linked scripts
-			// out of the usemin's build comment blocks; we don't need to worry about that
-			// 'cdnify',
+		'concat',
+		'cssmin',
+		'copy:dist',
+		// from what I understand, cdnify only moves google cdn linked scripts
+		// out of the usemin's build comment blocks; we don't need to worry about that
+		// 'cdnify',
 		'ngmin',
 		'rev:first',
 		//'uglify'
@@ -436,6 +461,7 @@ module.exports = function (grunt) {
 		'html2js',
 		'rev:second',
 		'usemin:templates',
+		'verifybuild',
 	]);
 
 	grunt.registerTask('default', ['typescript']);

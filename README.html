@@ -226,6 +226,9 @@ had their asset references updated to revved versions. We also need to rev the p
 also need to make sure that the final copy of index.html refers to the revved templates bundle. Finally,
 dev should still work without any of this getting in the way.</p>
 <p>See comments and build task layout inside the Gruntfile to see how all this works.</p>
+<p>Since the build process has gotten rather involved with the revving and partials caching, we built a
+grunt task the verify success of the build. Its job is to basically check that whatever needs to be
+revved is, and that whatever needs to reference revved versions of files, does.</p>
 <h2>TODO and wishlist</h2>
 <h3>More AngularJS samples</h3>
 <ul>
