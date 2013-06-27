@@ -3,7 +3,7 @@ angtsApp.controller("TasksController", function($scope, taskService) {
 });
 
 interface TasksControllerScope extends ng.IScope {
-	tasks: ng.IPromise /* of Task[] */;
+	tasks: ng.IPromise<Task[]>;
 }
 
 class TasksController {
