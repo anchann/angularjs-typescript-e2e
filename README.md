@@ -1,5 +1,10 @@
 # AngularJS in TypeScript with working httpBackend-mocked E2E tests
 
+## Towards TypeScript in generator-angular
+
+I've started working on getting TypeScript, along with some of the other nice tidbits from this project,
+into yeoman's generator-angular. You can see the ongoing work here: https://github.com/anchann/generator-angular
+
 ## What this project is
 
 * A sample of how one can structure a real-world large app written in AngularJS
