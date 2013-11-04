@@ -18,8 +18,8 @@
 		<![endif]-->
 
 		<!--[if lt IE 9]>
-			<script src="components/es5-shim/es5-shim.js"></script>
-			<script src="components/json3/lib/json3.min.js"></script>
+			<script src="bower_components/es5-shim/es5-shim.js"></script>
+			<script src="bower_components/json3/lib/json3.min.js"></script>
 		<![endif]-->
 
 		<div class="container" ng-view></div>
@@ -37,9 +37,10 @@
 		-->
 
 		<!-- build:js(./) scripts/scripts-e2e.js -->
-		<script src="app/components/underscore/underscore.js"></script>
-		<script src="app/components/angular/angular.js"></script>
-		<script src="app/components/angular-mocks/angular-mocks.js"></script>
+		<script src="app/bower_components/underscore/underscore.js"></script>
+		<script src="app/bower_components/angular/angular.js"></script>
+		<script src="app/bower_components/angular-route/angular-route.js"></script>
+		<script src="app/bower_components/angular-mocks/angular-mocks.js"></script>
 
 		<!-- if the number of mock data files grows a lot, write a grunt task to package them -->
 

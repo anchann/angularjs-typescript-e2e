@@ -3,11 +3,13 @@ angtsApp.controller("TasksController", function($scope, taskService) {
 });
 
 interface TasksControllerScope extends ng.IScope {
-	tasks: ng.IPromise<Task[]>;
+	tasks: Task[];
 }
 
 class TasksController {
 	constructor($scope: TasksControllerScope, taskService: TaskService) {
-		$scope.tasks = taskService.get();
+		taskService.get().then((tasks: Task[]): void => {
+			$scope.tasks = tasks;
+		});
 	}
 }

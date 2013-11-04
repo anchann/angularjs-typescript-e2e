@@ -167,7 +167,7 @@ module.exports = function (grunt) {
 				imagesDir:      '<%= yeoman.tmp %>/images',
 				javascriptsDir: '<%= yeoman.app %>/scripts',
 				fontsDir:       '<%= yeoman.app %>/styles/fonts',
-				importPath:     '<%= yeoman.app %>/components',
+				importPath:     '<%= yeoman.app %>/bower_components',
 				relativeAssets: true
 			},
 			dist: {
@@ -312,7 +312,7 @@ module.exports = function (grunt) {
 						'*.{ico,txt}',
 						'.htaccess',
 						// change this to copy only the components necessary for the production dist
-						'components/**/*',
+						'bower_components/**/*',
 						'images/**/*.{gif,webp}',
 						'views/**/*.html',
 						'*.html',
