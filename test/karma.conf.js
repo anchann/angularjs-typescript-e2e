@@ -9,9 +9,10 @@ basePath = '../';
 files = [
 	JASMINE,
 	JASMINE_ADAPTER,
-	'app/components/angular/angular.js',
-	'app/components/angular-mocks/angular-mocks.js',
-	'app/components/underscore/underscore.js',
+	'app/bower_components/angular/angular.js',
+	'app/bower_components/angular-route/angular-route.js',
+	'app/bower_components/angular-mocks/angular-mocks.js',
+	'app/bower_components/underscore/underscore.js',
 	'app/config.js',
 	'app/config_overrides.js',
 	'app/scripts/templates.js',

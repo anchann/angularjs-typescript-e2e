@@ -21,9 +21,7 @@ describe("Controller: TasksController", function() {
 		var tasks = undefined;
 
 		runs(function() {
-			scope.tasks.then(function(value) {
-				tasks = value;
-			});
+			tasks = scope.tasks;
 		});
 
 		waitsFor(function() { return tasks !== undefined; }, 500);
